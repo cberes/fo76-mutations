@@ -9,5 +9,5 @@ Calculates the effects of mutations in the video game Fallout 76. Mutations have
 
 ## Usage
 
-   python3 mutations.py
+    python3 mutations.py
 
