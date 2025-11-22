@@ -52,226 +52,51 @@
 //     Gun accuracy -50%
 // Unstable Isotope
 //     Medium chance to release a radiation blast when struck in melee
-//     Minor damage to player during the radiation blast
+//     Minor damage to player during the radiation 
 
-const mutations = [
-    {
-        name: 'Adrenal Reaction',
-        positive: [
-            { effect: 'DMG per kill while on a Kill Streak', diff: 1.05, type: '%' }
-        ],
-        negative: [
-            { effect: 'Max HP', diff: -50 }
-        ]
-    },
-    {
-        name: 'Bird Bones',
-        positive: [
-            { effect: 'AGI', diff: 4 },
-            { effect: 'Fall from heights more gradually', diff: 1 }
-        ],
-        negative: [
-            { effect: 'STR', diff: -4 },
-            { effect: 'Limb Damage', diff: 10000000 }
-        ]
-    },
-    {
-        name: 'Carnivore',
-        positive: [
-            { effect: 'Meat Benefits', diff: 1, type: '%' }
-        ],
-        negative: [
-            { effect: 'Plant Benefits', diff: -1, type: '%' }
-        ]
-    },
-    {
-        name: 'Herbivore',
-        positive: [
-            { effect: 'Plant Benefits', diff: 1, type: '%' }
-        ],
-        negative: [
-            { effect: 'Meat Benefits', diff: -1, type: '%' }
-        ]
-    },
-    {
-        name: 'Chameleon',
-        positive: [
-            { effect: 'Invisibility in combat if unarmored and standing still', diff: 10000000 }
-        ],
-        negative: []
-    },
-    {
-        name: 'Eagle Eyes',
-        positive: [
-            { effect: 'Critical Damage', diff: 1.5, type: '%' },
-            { effect: 'PER', diff: 4 }
-        ],
-        negative: [
-            { effect: 'STR', diff: -4 }
-        ]
-    },
-    {
-        name: 'Egg Head',
-        positive: [
-            { effect: 'INT', diff: -6 }
-        ],
-        negative: [
-            { effect: 'STR', diff: -3 },
-            { effect: 'END', diff: -3 }
-        ]
-    },
-    {
-        name: 'Electrically Charged',
-        positive: [
-            { effect: 'Chance to shock melee attackers', diff: 10000000 }
-        ],
-        negative: [
-            { effect: 'Small amount of damage done to player', diff: 10000000 }
-        ]
-    },
-    {
-        name: 'Empath',
-        positive: [
-            { effect: 'Teammate Damage Taken', diff: -0.25, type: '%' }
-        ],
-        negative: [
-            { effect: 'Damage Taken', diff: 1.33, type: '%' }
-        ]
-    },
-    {
-        name: 'Grounded',
-        positive: [
-            { effect: 'Energy Resistance', diff: 100 }
-        ],
-        negative: [
-            { effect: 'Energy Damage', diff: -0.5, type: '%' }
-        ]
-    },
-    {
-        name: 'Healing Factor',
-        positive: [
-            { effect: 'Health Regeneration', diff: 3, type: '%' }
-        ],
-        negative: [
-            { effect: 'Chem effects', diff: -0.55, type: '%' }
-        ]
-    },
-    {
-        name: 'Herd Mentality',
-        positive: [
-            { effect: 'STR', diff: 2, team: true },
-            { effect: 'PER', diff: 2, team: true },
-            { effect: 'END', diff: 2, team: true },
-            { effect: 'CHR', diff: 2, team: true },
-            { effect: 'INT', diff: 2, team: true },
-            { effect: 'AGI', diff: 2, team: true },
-            { effect: 'LCK', diff: 2, team: true }
-        ],
-        negative: [
-            { effect: 'STR', diff: -2, solo: true },
-            { effect: 'PER', diff: -2, solo: true },
-            { effect: 'END', diff: -2, solo: true },
-            { effect: 'CHR', diff: -2, solo: true },
-            { effect: 'INT', diff: -2, solo: true },
-            { effect: 'AGI', diff: -2, solo: true },
-            { effect: 'LCK', diff: -2, solo: true }
-        ]
-    },
-    {
-        name: 'Marsupial',
-        positive: [
-            { effect: 'Carry Weight', diff: 20 },
-            { effect: 'Jump Height', diff: 1 }
-        ],
-        negative: [
-            { effect: 'INT', diff: -4 }
-        ]
-    },
-    {
-        name: 'Plague Walker',
-        positive: [
-            { effect: 'Poison Aura', diff: 1 }
-        ],
-        negative: []
-    },
-    {
-        name: 'Scaly Skin',
-        positive: [
-            { effect: 'Damage Resistance', diff: 50 },
-            { effect: 'Energy Resistance', diff: 50 }
-        ],
-        negative: [
-            { effect: 'Max AP', diff: -50 }
-        ]
-    },
-    {
-        name: 'Speed Demon',
-        positive: [
-            { effect: 'Movement Spped', diff: 1.2, type: '%' },
-            { effect: 'Reload Speed', diff: 1.2, type: '%' }
-        ],
-        negative: [
-            { effect: 'Hunger', diff: 1.5, type: '%', ignoreClassFreak: true },
-            { effect: 'Thirst', diff: 1.5, type: '%', ignoreClassFreak: true }
-        ]
-    },
-    {
-        name: 'Talons',
-        positive: [
-            { effect: 'Fist Damage', diff: 1.25, type: '%' }
-        ],
-        negative: [
-            { effect: 'AGI', diff: -4 }
-        ]
-    },
-    {
-        name: 'Twisted Muscles',
-        positive: [
-            { effect: 'Melee Damage', diff: 1.25, type: '%' },
-            { effect: 'Cripple Limb Chance', diff: 1.5, type: '%' } // TODO IDK what the real value is
-        ],
-        negative: [
-            { effect: 'Gun Accurary', diff: -0.5, type: '%' },
-        ]
-    },
-    {
-        name: 'Unstable Isotope',
-        positive: [
-            { effect: 'Medium chance to release a radiation blast when struck in melee', diff: 1 }
-        ],
-        negative: [
-            { effect: 'Minor damage to player during the radiation blast', diff: 1 }
-        ]
-    }
-];
+const fs = require('fs');
 
 const classFreak = [
-    0,
-    0.25,
-    0.5,
-    0.75
+  0,
+  0.25,
+  0.5,
+  0.75
 ];
 
 const strangeInNumbers = [
-    0,
-    0.25
+  0,
+  0.25
 ];
 
 function sumDiffs(diffs) {
-    return diffs.reduce((acc, cur) => (acc || 0.0) + cur);
+  return diffs.reduce((acc, cur) => (acc || 0.0) + cur);
 }
 
-console.log(JSON.stringify(mutations));
-
 function mutate(mutationsPresent, classFreakLevel, strangeInNumbersLevel, isSolo) {
-    const mutationsAcquired = mutations.filter(({ name }) => mutationsPresent.includes(name));
-    const effects = mutationsAcquired.flatMap(it => it.positive.concat(it.negative));
-    const effectsAfterTeamSolo = effects.filter(({ solo, team}) => (solo === undefined  && team === undefined) || solo === isSolo || team === !isSolo);
-    const effectsByType = Object.groupBy(effectsAfterTeamSolo, ({ effect }) => effect);
-    effectsByType.reduce((acc, cur) => {
-        const byType = Objects.groupBy(cur, ({ type }) => type || '#')
-        const sum = byType['#'].length ? sumDiffs(byType['#']) : 1;
-        const multiplier = byType['%'].length ? sumDiffs(byType['%']) : 1;
-        const result = sum * multiplier;
-    })
+  const mutationsAcquired = mutations.filter(({ name }) => mutationsPresent.includes(name));
+  const effects = mutationsAcquired.flatMap(it => it.positive.concat(it.negative));
+  const effectsAfterTeamSolo = effects.filter(({ solo, team}) => (solo === undefined  && team === undefined) || solo === isSolo || team === !isSolo);
+  const effectsByType = Object.groupBy(effectsAfterTeamSolo, ({ effect }) => effect);
+  effectsByType.reduce((acc, cur) => {
+    const byType = Objects.groupBy(cur, ({ type }) => type || '#')
+    const sum = byType['#'].length ? sumDiffs(byType['#']) : 1;
+    const multiplier = byType['%'].length ? sumDiffs(byType['%']) : 1;
+    const result = sum * multiplier;
+  })
+}
+
+function main() {
+  fs.readFile('mutations.json', function(err, data) { 
+    if (err) {
+      throw err;
+    }
+  
+    const mutations = JSON.parse(data); 
+    console.log(mutations);
+    // TODO do something with mutate
+  }); 
+}
+
+if (require.main === module) {
+  main();
 }
