@@ -1,4 +1,5 @@
 import json
+import multiprocessing as mp
 from dataclasses import dataclass
 from typing import Any, Self
 
@@ -119,18 +120,17 @@ class Player:
     for effect in self.effects.items():
       print(f'{effect[0]}: {effect[1]}')
 
-def simulate() -> None:
-  conditions: dict[str, int] = {}
-  active_mutations: set[str] = set()
-  mutations: list[Mutation] = []
-  with open('player.json', 'r') as file:
-    data = json.load(file)
-    active_mutations |= set(data['mutations'])
-    conditions |= data["conditions"]
+def read_json_file(filename: str) -> Any:
+  with open(filename, 'r') as file:
+    return json.load(file)
 
-  with open('mutations.json', 'r') as file:
-    data = json.load(file)
-    mutations += [Mutation.from_json(x) for x in data]
+def simulate() -> None:
+  with mp.Pool() as pool:
+    mutationData, playerData = pool.map(read_json_file, ['mutations.json', 'player.json'])
+
+  active_mutations: set[str] = set(playerData['mutations'])
+  conditions: dict[str, int] = playerData["conditions"]
+  mutations: list[Mutation] = [Mutation.from_json(x) for x in mutationData]
 
   player = Player(mutations, active_mutations, list(conditions.items()))
   player.print_effects()

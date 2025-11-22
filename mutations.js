@@ -54,7 +54,7 @@
 //     Medium chance to release a radiation blast when struck in melee
 //     Minor damage to player during the radiation 
 
-const fs = require('fs');
+const fs = require('fs').promises;
 
 const classFreak = [
   0,
@@ -85,16 +85,23 @@ function mutate(mutationsPresent, classFreakLevel, strangeInNumbersLevel, isSolo
   })
 }
 
-function main() {
-  fs.readFile('mutations.json', function(err, data) { 
-    if (err) {
-      throw err;
-    }
-  
-    const mutations = JSON.parse(data); 
-    console.log(mutations);
+async function main() {
+  try {
+    const [mutationData, playerData] = await Promise.all([
+      fs.readFile('mutations.json', 'utf8'),
+      fs.readFile('player.json', 'utf8'),
+    ]);
+
+    const mutations = JSON.parse(mutationData);
+    const { mutations: activeMutations, conditions } = JSON.parse(playerData);
+
     // TODO do something with mutate
-  }); 
+    console.log(mutations);
+    console.log(activeMutations);
+    console.log(conditions);
+  } catch (err) {
+    console.error('Error reading files:', err);
+  }
 }
 
 if (require.main === module) {

@@ -2,23 +2,25 @@
   "mutations": [
     "Adrenal Reaction",
     "Bird Bones",
-    "xCarnivore",
     "Chameleon",
     "Eagle Eyes",
     "Egg Head",
-    "xElectrically Charged",
-    "xEmpath",
-    "xGrounded",
     "Healing Factor",
     "Herbivore",
     "Herd Mentality",
     "Marsupial",
-    "xPlague Walker",
     "Scaly Skin",
     "Speed Demon",
     "Talons",
-    "Twisted Muscles",
-    "xUnstable Isotope"
+    "Twisted Muscles"
+  ],
+  "inactiveMutations": [
+    "Carnivore",
+    "Electrically Charged",
+    "Empath",
+    "Grounded",
+    "Plague Walker",
+    "Unstable Isotope"
   ],
   "conditions": {
     "Team": 4,
