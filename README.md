@@ -6,6 +6,8 @@ Calculates the effects of mutations in the video game Fallout 76. Mutations have
 
 - mutations.json has a list of all mutations; it doesn't need to be modified
 - player.json contains the player state including active mutations and perks; this is where you can make changes
+   - inactiveMutations is not used (can keep unused mutations here)
+   - `Team` is the number of teammates including yourself; use `0` for solo
 
 ## Usage
 

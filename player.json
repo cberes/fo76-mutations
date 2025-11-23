@@ -2,7 +2,6 @@
   "mutations": [
     "Adrenal Reaction",
     "Bird Bones",
-    "Chameleon",
     "Eagle Eyes",
     "Egg Head",
     "Healing Factor",
@@ -10,16 +9,17 @@
     "Herd Mentality",
     "Marsupial",
     "Scaly Skin",
-    "Speed Demon",
-    "Talons",
-    "Twisted Muscles"
+    "Speed Demon"
   ],
   "inactiveMutations": [
     "Carnivore",
+    "Chameleon",
     "Electrically Charged",
     "Empath",
     "Grounded",
     "Plague Walker",
+    "Talons",
+    "Twisted Muscles",
     "Unstable Isotope"
   ],
   "conditions": {

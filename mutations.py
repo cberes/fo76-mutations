@@ -63,7 +63,6 @@ class Player:
       'Gun Accurary': 1.0
     }
 
-    # TODO have to consider positive/negative effects separately for class freak & strange in numbers
     def is_team_match(e: Effect) -> bool:
       on_team = not ('Team', 0) in self.conditions
       return e.team is None or e.team == on_team
@@ -76,15 +75,15 @@ class Player:
     current_effects = [(e.effect, e.diff) for m in self.mutations for e in m.negative if e.type == '%' and is_team_match(e)]
     [self.multiply_effect(x, False) for x in current_effects]
   
-  def add_effect(self, xyz: tuple[str, float], positive: bool) -> None:
-    effect, diff = xyz
+  def add_effect(self, item: tuple[str, float], positive: bool) -> None:
+    effect, diff = item
     diff = self.adjust_difference(diff, positive)
     if not effect in self.effects:
       self.effects[effect] = 0.0
     self.effects[effect] += diff
   
-  def multiply_effect(self, xyz: tuple[str, float], positive: bool) -> None:
-    effect, diff = xyz
+  def multiply_effect(self, item: tuple[str, float], positive: bool) -> None:
+    effect, diff = item
     diff = self.adjust_difference(diff, positive)
     if not effect in self.effects:
       self.effects[effect] = 0.0
