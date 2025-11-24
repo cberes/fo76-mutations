@@ -73,19 +73,11 @@ class Player {
     const isTeamMatch = it => it.team === undefined || it.team === (this.conditions['Team'] || 0) > 0;
 
     let effects = this.mutations.flatMap(it => it.positive)
-      .filter(it => (it.type || '#') === '#' && isTeamMatch(it));
+      .filter(isTeamMatch);
     let tempEffects = effects.reduce((acc, cur) => this.addEffect(acc, cur, true), initialEffects());
 
     effects = this.mutations.flatMap(it => it.negative)
-      .filter(it => (it.type || '#') === '#' && isTeamMatch(it));
-    tempEffects = effects.reduce((acc, cur) => this.addEffect(acc, cur, false), tempEffects);
-
-    effects = this.mutations.flatMap(it => it.positive)
-      .filter(it => it.type === '%' && isTeamMatch(it));
-    tempEffects = effects.reduce((acc, cur) => this.addEffect(acc, cur, true), tempEffects);
-
-    effects = this.mutations.flatMap(it => it.negative)
-      .filter(it => it.type === '%' && isTeamMatch(it));
+      .filter(isTeamMatch);
     this.effects = effects.reduce((acc, cur) => this.addEffect(acc, cur, false), tempEffects);
   }
 
