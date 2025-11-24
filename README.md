@@ -11,5 +11,14 @@ Calculates the effects of mutations in the video game Fallout 76. Mutations have
 
 ## Usage
 
+Run the python script
+
     python3 mutations.py
 
+Or run the JavaScript script
+
+    node mutations.js
+
+Compare the output of the two
+
+    diff <(python3 mutations.py) <(node mutations.js)
