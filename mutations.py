@@ -1,7 +1,26 @@
 import json
 import multiprocessing as mp
 from dataclasses import dataclass
+from functools import reduce
 from typing import Any, Self
+
+class Stat:
+  def __init__(self, base_value: float = 0.0):
+    self.base_value = base_value
+    self.adds: list[float] = []
+    self.multiplies: list[float] = []
+
+  def __str__(self) -> str:
+    return str(self.value())
+  
+  def value(self) -> float:
+    return sum(self.adds, self.base_value) * reduce(lambda acc, cur: acc * cur, self.multiplies, 1.0)
+
+  def add(self, value: float) -> None:
+    self.adds.append(value)
+
+  def multiply(self, value: float) -> None:
+    self.multiplies.append(value)
 
 @dataclass
 class Effect:
@@ -66,28 +85,24 @@ class Player:
     def is_team_match(e: Effect) -> bool:
       on_team = not ('Team', 0) in self.conditions
       return e.team is None or e.team == on_team
-    current_effects = [(e.effect, e.diff) for m in self.mutations for e in m.positive if e.type == '#' and is_team_match(e)]
-    [self.add_effect(x, True) for x in current_effects]
-    current_effects = [(e.effect, e.diff) for m in self.mutations for e in m.negative if e.type == '#' and is_team_match(e)]
-    [self.add_effect(x, False) for x in current_effects]
-    current_effects = [(e.effect, e.diff) for m in self.mutations for e in m.positive if e.type == '%' and is_team_match(e)]
-    [self.multiply_effect(x, True) for x in current_effects]
-    current_effects = [(e.effect, e.diff) for m in self.mutations for e in m.negative if e.type == '%' and is_team_match(e)]
-    [self.multiply_effect(x, False) for x in current_effects]
-  
-  def add_effect(self, item: tuple[str, float], positive: bool) -> None:
-    effect, diff = item
-    diff = self.adjust_difference(diff, positive)
-    if not effect in self.effects:
-      self.effects[effect] = 0.0
-    self.effects[effect] += diff
-  
-  def multiply_effect(self, item: tuple[str, float], positive: bool) -> None:
-    effect, diff = item
-    diff = self.adjust_difference(diff, positive)
-    if not effect in self.effects:
-      self.effects[effect] = 0.0
-    self.effects[effect] *= diff
+
+    [self.add_effect(e, True) for m in self.mutations for e in m.positive if is_team_match(e)]
+    [self.add_effect(e, False) for m in self.mutations for e in m.negative if is_team_match(e)]
+
+  def add_effect(self, item: Effect, positive: bool) -> None:
+    key = item.effect
+    if not key in self.effects:
+      self.effects[key] = Stat()
+
+    if isinstance(self.effects[key], float):
+      self.effects[key] = Stat(self.effects[key])
+
+    current = self.effects[key]
+    diff = self.adjust_difference(item.diff, positive)
+    if item.type == '%':
+      current.multiply(diff)
+    else:
+      current.add(diff)
 
   def adjust_difference(self, diff: float, positive: bool) -> float:
     class_freak = self.apply_class_freak() if not positive else 1.0
@@ -134,5 +149,5 @@ def simulate() -> None:
   player = Player(mutations, active_mutations, list(conditions.items()))
   player.print_effects()
 
-if __name__ == "__main__":
+if __name__ == '__main__':
   simulate()

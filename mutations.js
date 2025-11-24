@@ -34,6 +34,34 @@ function initialEffects() {
   };
 }
 
+class Stat {
+  constructor(baseValue) {
+    this.baseValue = baseValue || 0.0;
+    this.adds = [];
+    this.multiplies = []
+  }
+
+  add(value) {
+    this.adds.push(value);
+  }
+
+  multiply(value) {
+    this.multiplies.push(value);
+  }
+
+  get value() {
+    return this.adds.reduce((acc, cur) => acc + cur, this.baseValue) * this.multiplies.reduce((acc, cur) => acc * cur, 1);
+  }
+
+  toJSON() {
+    return this.value;
+  }
+
+  toString() {
+    return this.value.toString();
+  }
+}
+
 class Player {
   constructor(mutations, activeMutations, conditions) {
     this.mutations = mutations.filter(({ name }) => activeMutations.includes(name));
@@ -62,15 +90,20 @@ class Player {
   }
 
   addEffect(effects, item, positive) {
-    if (!(item.effect in effects)) {
-      effects[item.effect] = 0.0;
+    const key = item.effect;
+    if (!(key in effects)) {
+      effects[key] = new Stat();
+    }
+
+    if (typeof effects[key] === 'number') {
+      effects[key] = new Stat(effects[key])
     }
 
     const diff = this.calculateDifference(item.diff, positive);
     if (item.type === '%') {
-      effects[item.effect] *= diff;
+      effects[key].multiply(diff);
     } else {
-      effects[item.effect] += diff;
+      effects[key].add(diff);
     }
     return effects;
   }
