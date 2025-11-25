@@ -11,7 +11,7 @@ class Stat:
     self.multiplies: list[float] = []
 
   def __str__(self) -> str:
-    return str(self.value())
+    return str(self.value()).removesuffix('.0')
   
   def value(self) -> float:
     return sum(self.adds, self.base_value) * reduce(lambda acc, cur: acc * cur, self.multiplies, 1.0)
@@ -63,7 +63,6 @@ class Player:
     self.mutations = [x for x in mutations if x.name in active_mutations]
     self.conditions = conditions
     self.effects: dict[str, float] = {
-      'DMG per kill while on a Kill Streak': 5.0,
       'Meat Benefits': 1.0,
       'Plant Benefits': 1.0,
       'Critical Damage': 1.0,
@@ -79,7 +78,10 @@ class Player:
       'Fist Damage': 1.0,
       'Melee Damage': 1.0,
       'Cripple Limb Chance': 1.0,
-      'Gun Accurary': 1.0
+      'Gun Accurary': 1.0,
+      'Fall Speed': 1.0,
+      'Fall Damage': 1.0,
+      'Jump Height': 1.0
     }
 
     def is_team_match(e: Effect) -> bool:
@@ -129,6 +131,9 @@ class Player:
         return 1.0
       case _:
         return 1.25
+
+  def get_effects(self) -> dict[str, float]:
+    return {k: v if isinstance(v, float) else v.value() for k, v in self.effects.items()}
   
   def print_effects(self) -> None:
     for effect in self.effects.items():
@@ -138,7 +143,7 @@ def read_json_file(filename: str) -> Any:
   with open(filename, 'r') as file:
     return json.load(file)
 
-def simulate() -> None:
+def simulate() -> dict[str, float]:
   with mp.Pool() as pool:
     mutationData, playerData = pool.map(read_json_file, ['mutations.json', 'player.json'])
 
@@ -148,6 +153,7 @@ def simulate() -> None:
 
   player = Player(mutations, active_mutations, list(conditions.items()))
   player.print_effects()
+  return player.get_effects()
 
 if __name__ == '__main__':
   simulate()

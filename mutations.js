@@ -14,7 +14,6 @@ const strangeInNumbers = [
 
 function initialEffects() {
   return {
-    'DMG per kill while on a Kill Streak': 5.0,
     'Meat Benefits': 1.0,
     'Plant Benefits': 1.0,
     'Critical Damage': 1.0,
@@ -30,7 +29,10 @@ function initialEffects() {
     'Fist Damage': 1.0,
     'Melee Damage': 1.0,
     'Cripple Limb Chance': 1.0,
-    'Gun Accurary': 1.0
+    'Gun Accurary': 1.0,
+    'Fall Speed': 1.0,
+    'Fall Damage': 1.0,
+    'Jump Height': 1.0
   };
 }
 
@@ -104,6 +106,14 @@ class Player {
     const classFreakMultipler = positive ? 1.0 : classFreak[this.conditions['Class Freak' || 0]];
     const strangeMultipler = positive ? strangeInNumbers[this.conditions['Strange in Numbers' || 0]] : 1.0;
     return diff * classFreakMultipler * strangeMultipler;
+  }
+
+  get effectsObj() {
+    return Object.keys(this.effects).reduce((acc, cur) => {
+      const item = this.effects[cur];
+      acc[cur] = typeof item === 'number' ? item : item.value;
+      return acc;
+    }, {});
   }
   
   printEffects() {

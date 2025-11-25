@@ -4,8 +4,7 @@
     "positive": [
       {
         "effect": "DMG per kill while on a Kill Streak",
-        "diff": 1.05,
-        "type": "%"
+        "diff": 5
       }
     ],
     "negative": [
@@ -23,8 +22,14 @@
         "diff": 4
       },
       {
-        "effect": "Fall from heights more gradually",
-        "diff": 1
+        "effect": "Fall Speed",
+        "diff": -0.52,
+        "type": "%"
+      },
+      {
+        "effect": "Fall Damage",
+        "diff": -0.76,
+        "type": "%"
       }
     ],
     "negative": [
@@ -272,7 +277,8 @@
       },
       {
         "effect": "Jump Height",
-        "diff": 1
+        "diff": 3.2,
+        "type": "%"
       }
     ],
     "negative": [
