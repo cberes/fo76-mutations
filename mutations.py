@@ -64,7 +64,7 @@ class Player:
     self.mutations = [x for x in mutations if x.name in active_mutations]
     self.conditions = conditions
     self.effects: dict[str, float] = {
-      'DMG per kill while on a Kill Streak': 1.0,
+      'DMG per kill while on a Kill Streak': 1.1,
       'Meat Benefits': 1.0,
       'Plant Benefits': 1.0,
       'Critical Damage': 1.0,
@@ -73,7 +73,7 @@ class Player:
       'Energy Damage': 1.0,
       'Health Regeneration': 1.0,
       'Chem effects': 1.0,
-      'Movement Spped': 1.0,
+      'Movement Speed': 1.0,
       'Reload Speed': 1.0,
       'Hunger': 1.0,
       'Thirst': 1.0,
@@ -119,8 +119,6 @@ class Player:
 
     if class_freak == 0:
       return lambda x: x
-    elif type == '%':
-      return lambda x: ((x - 1.0) * multiplier) + 1.0
     else:
       return lambda x: x * multiplier
 
@@ -129,8 +127,6 @@ class Player:
     teammates = next((x[1] for x in self.conditions if x[0] == 'Team'), 0)
     if teammates < 2:
       return lambda x: x
-    elif type == '%':
-      return lambda x: ((x - 1.0) * 1.25) + 1.0
     else:
       return lambda x: x * 1.25
 

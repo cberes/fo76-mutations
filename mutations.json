@@ -4,8 +4,7 @@
     "positive": [
       {
         "effect": "DMG per kill while on a Kill Streak",
-        "diff": 1.05,
-        "type": "%"
+        "diff": 0.05
       }
     ],
     "negative": [
@@ -24,13 +23,11 @@
       },
       {
         "effect": "Fall Speed",
-        "diff": -0.52,
-        "type": "%"
+        "diff": -0.52
       },
       {
         "effect": "Fall Damage",
-        "diff": -0.76,
-        "type": "%"
+        "diff": -0.76
       }
     ],
     "negative": [
@@ -93,8 +90,7 @@
     "positive": [
       {
         "effect": "Critical Damage",
-        "diff": 1.5,
-        "type": "%"
+        "diff": 0.5
       },
       {
         "effect": "PER",
@@ -187,8 +183,7 @@
     "negative": [
       {
         "effect": "Chem effects",
-        "diff": -0.55,
-        "type": "%"
+        "diff": -0.55
       }
     ]
   },
@@ -322,28 +317,22 @@
     "name": "Speed Demon",
     "positive": [
       {
-        "effect": "Movement Spped",
-        "diff": 1.2,
-        "type": "%"
+        "effect": "Movement Speed",
+        "diff": 0.2
       },
       {
         "effect": "Reload Speed",
-        "diff": 1.32,
-        "type": "%"
+        "diff": 0.32
       }
     ],
     "negative": [
       {
         "effect": "Hunger",
-        "diff": 1.5,
-        "type": "%",
-        "ignoreClassFreak": true
+        "diff": 0.5
       },
       {
         "effect": "Thirst",
-        "diff": 1.5,
-        "type": "%",
-        "ignoreClassFreak": true
+        "diff": 0.5
       }
     ]
   },
