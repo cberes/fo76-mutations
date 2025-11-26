@@ -36,10 +36,10 @@ class PlayerTest(unittest.TestCase):
     self.assertEqual(effects['Critical Damage'], 1.875) # +63%
     self.assertEqual(effects['Health Regeneration'], 3.75) # ???
     self.assertEqual(effects['Chem effects'], -0.1375) # ???
-    self.assertEqual(effects['Movement Spped'], 1.5) # ???
-    self.assertEqual(effects['Reload Speed'], 1.5) # ???
-    self.assertEqual(effects['Hunger'], 0.375) # ???
-    self.assertEqual(effects['Thirst'], 0.375) # ???
+    self.assertEqual(effects['Movement Spped'], 1.25)
+    self.assertEqual(effects['Reload Speed'], 1.4)
+    self.assertEqual(effects['Hunger'], 1.125)
+    self.assertEqual(effects['Thirst'], 1.125)
     self.assertEqual(effects['Fall Speed'], -0.65) # ???
     self.assertEqual(effects['Fall Damage'], -0.95) # ???
     self.assertEqual(effects['AGI'], 7.5)

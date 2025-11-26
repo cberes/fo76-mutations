@@ -4,7 +4,8 @@
     "positive": [
       {
         "effect": "DMG per kill while on a Kill Streak",
-        "diff": 5
+        "diff": 1.05,
+        "type": "%"
       }
     ],
     "negative": [
@@ -327,7 +328,7 @@
       },
       {
         "effect": "Reload Speed",
-        "diff": 1.2,
+        "diff": 1.32,
         "type": "%"
       }
     ],

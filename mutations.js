@@ -14,6 +14,7 @@ const strangeInNumbers = [
 
 function initialEffects() {
   return {
+    'DMG per kill while on a Kill Streak': 1.0
     'Meat Benefits': 1.0,
     'Plant Benefits': 1.0,
     'Critical Damage': 1.0,

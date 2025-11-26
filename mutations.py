@@ -1,5 +1,6 @@
 import json
 import multiprocessing as mp
+from collections.abc import Callable
 from dataclasses import dataclass
 from functools import reduce
 from typing import Any, Self
@@ -63,6 +64,7 @@ class Player:
     self.mutations = [x for x in mutations if x.name in active_mutations]
     self.conditions = conditions
     self.effects: dict[str, float] = {
+      'DMG per kill while on a Kill Streak': 1.0,
       'Meat Benefits': 1.0,
       'Plant Benefits': 1.0,
       'Critical Damage': 1.0,
@@ -100,37 +102,37 @@ class Player:
       self.effects[key] = Stat(self.effects[key])
 
     current = self.effects[key]
-    diff = self.adjust_difference(item.diff, positive)
+    diff = self.adjust_difference(item.diff, item.type, positive)
     if item.type == '%':
       current.multiply(diff)
     else:
       current.add(diff)
 
-  def adjust_difference(self, diff: float, positive: bool) -> float:
-    class_freak = self.apply_class_freak() if not positive else 1.0
-    strange = self.apply_strange_in_numbers() if positive else 1.0
-    return diff * class_freak * strange
+  def adjust_difference(self, diff: float, type: str, positive: bool) -> float:
+    adjustment = self.apply_strange_in_numbers(type) if positive else self.apply_class_freak(type)
+    return adjustment(diff)
 
-  def apply_class_freak(self) -> float:
+  def apply_class_freak(self, type: str) -> Callable[[float], float]:
     class_freak = next((x[1] for x in self.conditions if x[0] == 'Class Freak'), 0)
-    match class_freak:
-      case 1:
-        return 0.75
-      case 2:
-        return 0.5
-      case 3:
-        return 0.25
-      case _:
-        return 1.0
+    multipliers: list[float] = [1.0, 0.75, 0.5, 0.25]
+    multiplier = multipliers[class_freak]
 
-  def apply_strange_in_numbers(self) -> float:
+    if class_freak == 0:
+      return lambda x: x
+    elif type == '%':
+      return lambda x: ((x - 1.0) * multiplier) + 1.0
+    else:
+      return lambda x: x * multiplier
+
+  def apply_strange_in_numbers(self, type: str) -> Callable[[float], float]:
     # TODO need a way to know if teammates are mutated
     teammates = next((x[1] for x in self.conditions if x[0] == 'Team'), 0)
-    match teammates:
-      case 0 | 1:
-        return 1.0
-      case _:
-        return 1.25
+    if teammates < 2:
+      return lambda x: x
+    elif type == '%':
+      return lambda x: ((x - 1.0) * 1.25) + 1.0
+    else:
+      return lambda x: x * 1.25
 
   def get_effects(self) -> dict[str, float]:
     return {k: v if isinstance(v, float) else v.value() for k, v in self.effects.items()}
