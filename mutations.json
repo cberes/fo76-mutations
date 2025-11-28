@@ -80,7 +80,7 @@
     "positive": [
       {
         "effect": "Invisibility in combat if unarmored and standing still",
-        "diff": 10000000
+        "diff": 1
       }
     ],
     "negative": []
@@ -128,13 +128,13 @@
     "positive": [
       {
         "effect": "Chance to shock melee attackers",
-        "diff": 10000000
+        "diff": 1
       }
     ],
     "negative": [
       {
         "effect": "Small amount of damage done to player",
-        "diff": 10000000
+        "diff": 1
       }
     ]
   },
@@ -143,15 +143,13 @@
     "positive": [
       {
         "effect": "Teammate Damage Taken",
-        "diff": -0.25,
-        "type": "%"
+        "diff": -0.25
       }
     ],
     "negative": [
       {
         "effect": "Damage Taken",
-        "diff": 1.33,
-        "type": "%"
+        "diff": 0.33
       }
     ]
   },
@@ -166,8 +164,7 @@
     "negative": [
       {
         "effect": "Energy Damage",
-        "diff": -0.5,
-        "type": "%"
+        "diff": -0.5
       }
     ]
   },
@@ -341,8 +338,7 @@
     "positive": [
       {
         "effect": "Fist Damage",
-        "diff": 1.25,
-        "type": "%"
+        "diff": 0.25
       }
     ],
     "negative": [
@@ -357,20 +353,17 @@
     "positive": [
       {
         "effect": "Melee Damage",
-        "diff": 1.25,
-        "type": "%"
+        "diff": 0.25
       },
       {
         "effect": "Cripple Limb Chance",
-        "diff": 1.5,
-        "type": "%"
+        "diff": 0.5
       }
     ],
     "negative": [
       {
         "effect": "Gun Accurary",
-        "diff": -0.5,
-        "type": "%"
+        "diff": -0.5
       }
     ]
   },
